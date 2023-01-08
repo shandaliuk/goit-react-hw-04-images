@@ -3,7 +3,6 @@ import { Overlay, ModalWindow, Image } from './Modal.styled';
 
 export class Modal extends Component {
   handleKeyDown = event => {
-    console.log(event);
     if (event.code === 'Escape') {
       this.props.onClosure(event);
     }

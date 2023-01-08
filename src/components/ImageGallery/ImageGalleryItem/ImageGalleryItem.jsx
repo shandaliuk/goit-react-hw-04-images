@@ -11,7 +11,7 @@ export class ImageGalleryItem extends Component {
     this.setState({ modalIsOpened: true });
   };
 
-  handleModalClosure = event => {
+  handleModalClosure = () => {
     this.setState({ modalIsOpened: false });
   };
 

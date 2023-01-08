@@ -12,6 +12,7 @@ export class App extends Component {
     images: [],
     page: 1,
     isLoading: false,
+    error: false,
   };
 
   totalHits = 0;
@@ -27,8 +28,14 @@ export class App extends Component {
           images: [...prevState.images, ...images.hits],
           isLoading: false,
         }));
-      } catch (error) {
-        console.log(error);
+      } catch {
+        this.setState({
+          query: '',
+          images: [],
+          page: 1,
+          isLoading: false,
+          error: true,
+        });
       }
     }
   }
@@ -39,6 +46,7 @@ export class App extends Component {
       images: [],
       page: 1,
       isLoading: true,
+      error: false,
     });
   };
 
@@ -53,6 +61,7 @@ export class App extends Component {
       <Application>
         <Searchbar onSubmit={this.handleSubmit} />
         <ImageGallery images={this.state.images} />
+        {this.state.error && <h2>Oops, something went wrong :( Try again.</h2>}
         {this.state.images.length < this.totalHits && !this.state.isLoading && (
           <Button onClick={this.handleClick} />
         )}
@@ -61,6 +70,3 @@ export class App extends Component {
     );
   }
 }
-
-// Errors handler
-// Pattern idle
