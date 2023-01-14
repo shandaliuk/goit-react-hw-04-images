@@ -41,6 +41,9 @@ export const App = () => {
   }, [page, query]);
 
   const handleSubmit = currentQuery => {
+    if (currentQuery === query) {
+      return;
+    }
     setQuery(currentQuery);
     setImages([]);
     setPage(1);
