@@ -12,8 +12,8 @@ export const App = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [isButtonVisible, setButtonVisibility] = useState(false);
 
-  const totalHits = useRef(0);
   const isFirstExecution = useRef(true);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export const App = () => {
     try {
       const updateImages = async () => {
         const images = await fetchImages(query, page);
-        totalHits.current = images.totalHits;
+        setButtonVisibility(page < Math.ceil(images.totalHits / 12));
         setImages(prevState => [...prevState, ...images.hits]);
         setLoading(false);
       };
@@ -61,9 +61,7 @@ export const App = () => {
       <Searchbar onSubmit={handleSubmit} />
       <ImageGallery images={images} />
       {error && <h2>Oops, something went wrong :( Try again.</h2>}
-      {images.length < totalHits.current && !isLoading && (
-        <Button onClick={handleClick} />
-      )}
+      {isButtonVisible && !isLoading && <Button onClick={handleClick} />}
       {isLoading && <Loader />}
     </Application>
   );
